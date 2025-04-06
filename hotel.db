@@ -1,0 +1,44 @@
+   CREATE TABLE Hotels (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       name TEXT NOT NULL,
+       address TEXT NOT NULL,
+       city TEXT NOT NULL,
+       country TEXT NOT NULL
+   );
+
+CREATE TABLE Rooms (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    hotel_id INTEGER,
+    room_type TEXT NOT NULL,
+    price REAL NOT NULL,
+    FOREIGN KEY (hotel_id) REFERENCES Hotels (id)
+);
+
+CREATE TABLE Guests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT
+);
+
+CREATE TABLE Reservations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guest_id INTEGER,
+    room_id INTEGER,
+    check_in_date TEXT NOT NULL,
+    check_out_date TEXT NOT NULL,
+    FOREIGN KEY (guest_id) REFERENCES Guests (id),
+    FOREIGN KEY (room_id) REFERENCES Rooms (id)
+);
+
+CREATE TABLE Payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    reservation_id INTEGER,
+    amount REAL NOT NULL,
+    payment_date TEXT NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES Reservations (id)
+);
+
+INSERT INTO Hotels (name, address, city, country, phone, email) 
+VALUES ('Hotel California', '123 Sunset Blvd', 'Los Angeles', 'USA', '123-456-7890', 'info@hotelcalifornia.com');
